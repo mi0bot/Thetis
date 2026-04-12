@@ -3045,8 +3045,9 @@ namespace Thetis
             {
                 if (isTXProfileSettingDifferent<int>(dr, "FilterLow", (int)udTXFilterLow.Value, out sReportOut)) sReport += sReportOut;
                 if (isTXProfileSettingDifferent<int>(dr, "FilterHigh", (int)udTXFilterHigh.Value, out sReportOut)) sReport += sReportOut;
-                if (isTXProfileSettingDifferent<string>(dr, "RXParaEQData", console.EQForm.ParaEQRXData, out sReportOut)) sReport += "RX EQ changed\n";
-                if (isTXProfileSettingDifferent<string>(dr, "TXParaEQData", console.EQForm.ParaEQTXData, out sReportOut)) sReport += "TX EQ changed\n";
+                if (isTXProfileSettingDifferent<bool>(dr, "EQUseLegacy", console.EQForm.UsingLegacyEQ, out sReportOut)) sReport += sReportOut;
+                if (isTXProfileSettingDifferent<string>(dr, "RXParaEQData", console.EQForm.ParaEQRXData, out sReportOut)) sReport += "RX ParaEQ changed" + Environment.NewLine; ;
+                if (isTXProfileSettingDifferent<string>(dr, "TXParaEQData", console.EQForm.ParaEQTXData, out sReportOut)) sReport += "TX ParaEQ changed" + Environment.NewLine; ;
                 if (isTXProfileSettingDifferent<int>(dr, "TXEQNumBands", console.EQForm.NumBands, out sReportOut)) sReport += sReportOut;
                 if (isTXProfileSettingDifferent<bool>(dr, "TXEQEnabled", console.EQForm.TXEQEnabled, out sReportOut)) sReport += sReportOut;
                 int[] eq = console.EQForm.TXEQ;
@@ -3197,7 +3198,8 @@ namespace Thetis
                 if (isTXProfileSettingDifferent<bool>(dr, "VAC2_Exclusive_Out", (bool)chkVAC2ExclusiveOut.Checked, out sReportOut)) sReport += sReportOut;
                 //
 
-                //CFC
+                //CFC                
+                if (isTXProfileSettingDifferent<bool>(dr, "CFCUseLegacy", chkCFC_legacy.Checked, out sReportOut)) sReport += sReportOut;
                 if (isTXProfileSettingDifferent<bool>(dr, "CFCEnabled", chkCFCEnable.Checked, out sReportOut)) sReport += sReportOut;
                 if (isTXProfileSettingDifferent<bool>(dr, "CFCPostEqEnabled", chkCFCPeqEnable.Checked, out sReportOut)) sReport += sReportOut;
                 if (isTXProfileSettingDifferent<bool>(dr, "CFCPhaseRotatorEnabled", chkPHROTEnable.Checked, out sReportOut)) sReport += sReportOut;
@@ -3214,7 +3216,7 @@ namespace Thetis
                 for (int i = 22; i < 32; i++)
                     if (isTXProfileSettingDifferent<int>(dr, "CFCEqFreq" + (i - 22).ToString(), cfceq[i], out sReportOut)) sReport += sReportOut;
 
-                if (isTXProfileSettingDifferent<string>(dr, "CFCParaEQData", CFCConfigForm.ConfigData, out sReportOut)) sReport += "CFC data changed\n";                
+                if (isTXProfileSettingDifferent<string>(dr, "CFCParaEQData", CFCConfigForm.ConfigData, out sReportOut)) sReport += "CFC para data changed" + Environment.NewLine;                
             }
 
             return sReport;
@@ -3243,6 +3245,7 @@ namespace Thetis
             {
                 if (DB.ConvertFromDBVal<int>(dr["FilterLow"]) != (int)udTXFilterLow.Value) return true;
                 if (DB.ConvertFromDBVal<int>(dr["FilterHigh"]) != (int)udTXFilterHigh.Value) return true;
+                if (DB.ConvertFromDBVal<bool>(dr["EQUseLegacy"]) != console.EQForm.UsingLegacyEQ) return true;
                 if (DB.ConvertFromDBVal<string>(dr["RXParaEQData"]) != console.EQForm.ParaEQRXData) return true;
                 if (DB.ConvertFromDBVal<string>(dr["TXParaEQData"]) != console.EQForm.ParaEQTXData) return true;
                 if (DB.ConvertFromDBVal<int>(dr["TXEQNumBands"]) != console.EQForm.NumBands) return true;
@@ -3404,6 +3407,7 @@ namespace Thetis
                 //
 
                 //CFC
+                if (DB.ConvertFromDBVal<bool>(dr["CFCUseLegacy"]) != chkCFC_legacy.Checked) return true;
                 if (DB.ConvertFromDBVal<bool>(dr["CFCEnabled"]) != chkCFCEnable.Checked) return true;
                 if (DB.ConvertFromDBVal<bool>(dr["CFCPostEqEnabled"]) != chkCFCPeqEnable.Checked) return true;
                 if (DB.ConvertFromDBVal<bool>(dr["CFCPhaseRotatorEnabled"]) != chkPHROTEnable.Checked) return true;
@@ -3562,6 +3566,7 @@ namespace Thetis
             //
 
             //CFC
+            Common.HightlightControl(chkCFC_legacy, bHighlight);
             Common.HightlightControl(chkCFCEnable, bHighlight);
             Common.HightlightControl(chkCFCPeqEnable, bHighlight);
             Common.HightlightControl(chkPHROTEnable, bHighlight);
@@ -3612,10 +3617,11 @@ namespace Thetis
 
             dr["FilterLow"] = (int)udTXFilterLow.Value;
             dr["FilterHigh"] = (int)udTXFilterHigh.Value;
+            dr["EQUseLegacy"] = console.EQForm.UsingLegacyEQ;
             dr["RXParaEQData"] = console.EQForm.ParaEQRXData;
             dr["TXParaEQData"] = console.EQForm.ParaEQTXData;
             dr["TXEQNumBands"] = console.EQForm.NumBands;
-            dr["TXEQEnabled"] = console.EQForm.TXEQEnabled;
+            dr["TXEQEnabled"] = console.EQForm.TXEQEnabled;            
             int[] eq = console.EQForm.TXEQ;
             dr["TXEQPreamp"] = eq[0];
             for (int i = 1; i < 11; i++)
@@ -3766,6 +3772,7 @@ namespace Thetis
             //
 
             //CFC
+            dr["CFCUseLegacy"] = (bool)chkCFC_legacy.Checked;
             dr["CFCEnabled"] = (bool)chkCFCEnable.Checked;
             dr["CFCPostEqEnabled"] = (bool)chkCFCPeqEnable.Checked;
             dr["CFCPhaseRotatorEnabled"] = (bool)chkPHROTEnable.Checked;
@@ -9457,6 +9464,7 @@ namespace Thetis
                 chkVAC2Enable.Checked = false;
             }
 
+            console.EQForm.UsingLegacyEQ = (bool)dr["EQUseLegacy"];
             console.EQForm.ParaEQRXData = (string)dr["RXParaEQData"];
             console.EQForm.ParaEQTXData = (string)dr["TXParaEQData"];
 
@@ -9632,6 +9640,11 @@ namespace Thetis
             //
 
             //CFC
+            chkCFC_legacy.CheckedChanged -= chkCFC_legacy_CheckedChanged;
+            chkCFC_legacy.Checked = (bool)dr["CFCUseLegacy"];
+            chkCFC_legacy_CheckedChanged(this, EventArgs.Empty);
+            chkCFC_legacy.CheckedChanged += chkCFC_legacy_CheckedChanged;
+
             chkCFCEnable.Checked = (bool)dr["CFCEnabled"];
             chkCFCPeqEnable.Checked = (bool)dr["CFCPostEqEnabled"];
             chkPHROTEnable.Checked = (bool)dr["CFCPhaseRotatorEnabled"];
@@ -37227,6 +37240,32 @@ namespace Thetis
                     txtRecording_customFolder.Text = dlg.SelectedPath;
                 }
             }
+        }
+        public void OpenWaveRecordFolder()
+        {
+            string fullPath = Path.Combine(console.ARP.AudioFolder, "waverecord");
+            try
+            {
+                //if not there make it
+                if (!Directory.Exists(fullPath))
+                {
+                    Directory.CreateDirectory(fullPath);
+                }
+            }
+            catch { }
+
+            try
+            {
+                if (Directory.Exists(fullPath))
+                {
+                    Process.Start("explorer.exe", fullPath);
+                }
+            }
+            catch { }
+        }
+        private void btnRecording_openWaverecordFolder_Click(object sender, EventArgs e)
+        {
+            OpenWaveRecordFolder();
         }
 
         private void btnRecording_openQuickFolder_Click(object sender, EventArgs e)
