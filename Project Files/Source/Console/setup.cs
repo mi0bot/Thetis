@@ -2953,22 +2953,6 @@ namespace Thetis
             set { if (comboTXProfileName != null) comboTXProfileName.Text = value; }
         }
 
-        //public void GetTxProfiles()
-        //{
-        //    comboTXProfileName.BeginUpdate
-        //    if (DB.ds == null) return;
-
-        //    comboTXProfileName.Items.Clear();
-        //    foreach (DataRow dr in DB.ds.Tables["TXProfile"].Rows)
-        //    {
-        //        if (dr.RowState != DataRowState.Deleted)
-        //        {
-        //            string profile_name = (string)dr["Name"];
-        //            if (!comboTXProfileName.Items.Contains(profile_name))
-        //                comboTXProfileName.Items.Add(profile_name);
-        //        }
-        //    }
-        //}
         public void GetTxProfiles()
         {
             DataSet data_set = DB.ds;
@@ -9778,9 +9762,8 @@ namespace Thetis
             string name = InputBox.Show("Save Profile", "Please enter a profile name:",
                 _current_profile);
 
-            // no more , in profile names, because it will make the tci tx profile messages look like they have multiple parts
-            // existing ones will cause issues no doubt, but just not worth the effort to reparse the database
-            name = name.Replace(",", "_");
+            // prevent these chars as they will cause issues for TCI messages that include tx profiles
+            name = name.Replace(',', '_').Replace(':', '_').Replace(';', '_');
 
             if (string.IsNullOrEmpty(name))
             {
