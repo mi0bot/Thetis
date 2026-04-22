@@ -133,6 +133,13 @@ namespace Thetis
                         NetworkIO.LRAudioSwap(0);
                         HardwareSpecific.Hardware = HPSDRHW.Angelia;
                         break;
+                    case HPSDRModel.ANAN_G1: //N1GP G1 added
+                        NetworkIO.SetRxADC(1);
+                        NetworkIO.SetMKIIBPF(1);
+                        cmaster.SetADCSupply(0, 33);
+                        NetworkIO.LRAudioSwap(0);
+                        HardwareSpecific.Hardware = HPSDRHW.HermesIII;
+                        break;
                     case HPSDRModel.ANAN200D:
                         NetworkIO.SetRxADC(2);
                         NetworkIO.SetMKIIBPF(0);
@@ -366,6 +373,8 @@ namespace Thetis
                     return HPSDRModel.HERMESLITE;
                 case "RED-PITAYA":
                     return HPSDRModel.REDPITAYA;
+                case "ANAN-G1":
+                    return HPSDRModel.ANAN_G1; //N1GP G1 added
                 default:
                     return HPSDRModel.HERMES;
             }
@@ -392,6 +401,8 @@ namespace Thetis
                     return "ANAN-7000DLE";
                 case HPSDRModel.ANAN8000D:
                     return "ANAN-8000DLE";
+                case HPSDRModel.ANAN_G1: //N1GP G1 added
+                    return "ANAN-G1";
                 case HPSDRModel.ANAN_G2:
                     return "ANAN-G2";
                 case HPSDRModel.ANAN_G2_1K:
@@ -704,6 +715,7 @@ namespace Thetis
                     return gains;
 
                 case HPSDRModel.ANAN7000D:
+                case HPSDRModel.ANAN_G1: //N1GP G1 added
                 case HPSDRModel.ANAN_G2:
                 case HPSDRModel.ANVELINAPRO3:
                 case HPSDRModel.REDPITAYA:
@@ -828,6 +840,7 @@ namespace Thetis
             switch (_model)
             {
                 case HPSDRModel.HERMES:
+                case HPSDRModel.ANAN_G1: //N1GP G1 added
                 case HPSDRModel.ANAN10:
                 case HPSDRModel.ANAN10E:
                 case HPSDRModel.ANAN100:

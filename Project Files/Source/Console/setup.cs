@@ -6502,6 +6502,7 @@ namespace Thetis
                 HardwareSpecific.Model != HPSDRModel.ANAN7000D &&
                 HardwareSpecific.Model != HPSDRModel.ANAN8000D &&
                 HardwareSpecific.Model != HPSDRModel.ANVELINAPRO3 &&
+                HardwareSpecific.Model != HPSDRModel.ANAN_G1 && //N1GP G1 added
                 HardwareSpecific.Model != HPSDRModel.ANAN_G2 &&
                 HardwareSpecific.Model != HPSDRModel.ANAN_G2_1K &&
                 HardwareSpecific.Model != HPSDRModel.REDPITAYA)//DH1KLM
@@ -6586,11 +6587,13 @@ namespace Thetis
             }
 
             if (HardwareSpecific.Model == HPSDRModel.HERMES ||
+                HardwareSpecific.Model == HPSDRModel.HERMESLITE ||
                 HardwareSpecific.Model == HPSDRModel.ANAN7000D || HardwareSpecific.Model == HPSDRModel.ANAN8000D ||
                 HardwareSpecific.Model == HPSDRModel.ANVELINAPRO3 ||
                 HardwareSpecific.Model == HPSDRModel.ANAN_G2 || HardwareSpecific.Model == HPSDRModel.ANAN_G2_1K ||
                HardwareSpecific.Model == HPSDRModel.REDPITAYA    || //DH1KLM
-               HardwareSpecific.Model == HPSDRModel.HERMESLITE)
+                HardwareSpecific.Model == HPSDRModel.REDPITAYA || HardwareSpecific.Model == HPSDRModel.ANAN_G1) //DH1KLM  //N1GP G1 added
+
             {
                 if (!tcGeneral.TabPages.Contains(tpOtherHW))
                 {
@@ -16125,6 +16128,7 @@ namespace Thetis
             }
             else if (AlexPresent && 
                 HardwareSpecific.Model != HPSDRModel.ANAN10 &&
+                HardwareSpecific.Model != HPSDRModel.ANAN_G1 && //N1GP G1 added
                 HardwareSpecific.Model != HPSDRModel.ANAN10E &&
                 HardwareSpecific.Model != HPSDRModel.ANAN7000D &&
                 HardwareSpecific.Model != HPSDRModel.ANAN8000D &&
@@ -16188,6 +16192,7 @@ namespace Thetis
             //MW0LGE_21f
             if (AlexPresent &&
                 HardwareSpecific.Model != HPSDRModel.ANAN10 &&
+                HardwareSpecific.Model != HPSDRModel.ANAN_G1 && //N1GP G1 added
                 HardwareSpecific.Model != HPSDRModel.ANAN10E &&
                 HardwareSpecific.Model != HPSDRModel.ANAN7000D &&
                 HardwareSpecific.Model != HPSDRModel.ANAN8000D &&
@@ -20226,6 +20231,50 @@ namespace Thetis
                     setupAttRXControls(2);
                     break;
 
+                case HPSDRModel.ANAN_G1: //N1GP G1 added
+                    chkAlexPresent.Checked = true;
+                    chkAlexPresent.Enabled = true;
+                    chkApolloPresent.Enabled = false;
+                    chkApolloPresent.Checked = false;
+                    pnlGeneralHardwareORION.Enabled = false;
+
+                    chkGeneralRXOnly.Visible = true;
+                    chkHermesStepAttenuator.Enabled = true;
+                    udHermesStepAttenuatorData.Enabled = true;
+                    chkRX2StepAtt.Checked = false;
+                    chkRX2StepAtt.Enabled = false;
+                    udHermesStepAttenuatorDataRX2.Enabled = false;
+                    chkAlexPresent_CheckedChanged(this, EventArgs.Empty);
+                    chkAlexAntCtrl_CheckedChanged(this, EventArgs.Empty);
+                    chkAutoPACalibrate.Checked = false;
+                    chkAutoPACalibrate.Visible = false;
+                    chkBypassANANPASettings.Visible = true;
+                    labelRXAntControl.Text = "  BYPS  EXT1  XVTR";
+                    RXAntChk1Name = "BYPS";
+                    RXAntChk2Name = "EXT1";
+                    RXAntChk3Name = "XVTR";
+                    labelATTOnTX.Visible = true;
+                    udATTOnTX.Visible = true;
+                    chkEXT1OutOnTx.Text = "Ext 1 on Tx";
+                    chkEXT2OutOnTx.Text = "Rx BYPASS on Tx";
+                    panelAlex1HPFControl.Visible = false;
+                    panelBPFControl.Visible = true;
+                    chkDisable6mLNAonRX.Parent = panelBPFControl;
+                    chkDisable6mLNAonRX.Location = new Point(16, 208);
+                    chkDisable6mLNAonTX.Parent = panelBPFControl;
+                    chkDisable6mLNAonTX.Location = new Point(63, 208);
+                    chkAlexHPFBypass.Parent = panelBPFControl;
+                    chkAlexHPFBypass.Location = new Point(140, 185);
+                    chkDisableHPFonTX.Parent = panelBPFControl;
+                    chkDisableHPFonTX.Location = new Point(140, 213);
+                    chkDisableHPFonPSb.Parent = panelBPFControl;
+                    chkDisableHPFonPSb.Location = new Point(140, 241);
+                    chkAutoATTRx1.Enabled = false;
+                    chkAutoATTRx2.Enabled = false;
+                    setupAttRXControls(1);
+                    setupAttRXControls(2);
+                    break;
+
                 case HPSDRModel.HERMESLITE:         // MI0BOT: HL2
                     HardwareSpecific.Model = HPSDRModel.HERMESLITE;
                     tcOptions.Controls.Add(tpHL2Options);
@@ -21019,6 +21068,7 @@ namespace Thetis
             {
                 case HPSDRModel.HERMES:
                 case HPSDRModel.HERMESLITE:         // MI0BOT: HL2
+                case HPSDRModel.ANAN_G1: //N1GP G1 added
                 case HPSDRModel.ANAN10:
                 case HPSDRModel.ANAN10E:
                 case HPSDRModel.ANAN100:
@@ -21197,6 +21247,7 @@ namespace Thetis
             {
                 case HPSDRModel.HERMES:
                 case HPSDRModel.HERMESLITE:
+                case HPSDRModel.ANAN_G1: //N1GP G1 added
                 case HPSDRModel.ANAN10:
                 case HPSDRModel.ANAN10E:
                 case HPSDRModel.ANAN100:
@@ -21227,6 +21278,7 @@ namespace Thetis
             {
                 case HPSDRModel.HERMES:
                 case HPSDRModel.HERMESLITE:
+                case HPSDRModel.ANAN_G1: //N1GP G1 added
                 case HPSDRModel.ANAN10:
                 case HPSDRModel.ANAN10E:
                 case HPSDRModel.ANAN100:
@@ -24583,6 +24635,24 @@ namespace Thetis
                         {
                             Band b = (Band)n;
                             string sSetting = "udHermesPAGainVHF" + (n - (int)Band.VHF0).ToString();
+                            float g = getOldVariablePAgain(sSetting, ref getDict);
+                            if (g != 1000) p.SetGainForBand(b, g);
+                            if (g != 1000 && bRemoveOld) removeOldPASetting(sSetting);
+                        }
+                        break;
+                    case HPSDRModel.ANAN_G1: //N1GP G1 added
+                        for (int n = (int)Band.B160M; n <= (int)Band.B6M; n++)
+                        {
+                            Band b = (Band)n;
+                            string sSetting = "udANAN_G1PAGain" + mapBandToMeters(b).ToString();
+                            float g = getOldVariablePAgain(sSetting, ref getDict);
+                            if (g != 1000) p.SetGainForBand(b, g);
+                            if (g != 1000 && bRemoveOld) removeOldPASetting(sSetting);
+                        }
+                        for (int n = (int)Band.VHF0; n <= (int)Band.VHF13; n++)
+                        {
+                            Band b = (Band)n;
+                            string sSetting = "udANAN_G1PAGainVHF" + (n - (int)Band.VHF0).ToString();
                             float g = getOldVariablePAgain(sSetting, ref getDict);
                             if (g != 1000) p.SetGainForBand(b, g);
                             if (g != 1000 && bRemoveOld) removeOldPASetting(sSetting);

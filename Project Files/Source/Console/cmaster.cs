@@ -598,6 +598,7 @@ namespace Thetis
                                 break;
                             case HPSDRModel.HERMES:
                             case HPSDRModel.HERMESLITE: // MI0BOT: HL2
+                            case HPSDRModel.ANAN_G1: //N1GP G1 added
                             case HPSDRModel.ANAN10:
                             case HPSDRModel.ANAN100:
                                 int[] FOUR_DDC_Function = new int[48]
@@ -688,6 +689,7 @@ namespace Thetis
                                 break;
                             case HPSDRModel.HERMES:
                             case HPSDRModel.HERMESLITE: // MI0BOT: HL2
+                            case HPSDRModel.ANAN_G1: //N1GP G1 added
                             case HPSDRModel.ANAN10:
                             case HPSDRModel.ANAN100:
                                 int[] FOUR_DDC_Function = new int[24]
@@ -810,6 +812,7 @@ namespace Thetis
 
                             case HPSDRModel.HERMES:
                             case HPSDRModel.HERMESLITE: // MI0BOT: HL2
+                            case HPSDRModel.ANAN_G1: //N1GP G1 added
                             case HPSDRModel.ANAN10:
                             case HPSDRModel.ANAN100:
                             case HPSDRModel.ANAN10E:
@@ -888,6 +891,7 @@ namespace Thetis
 
                             case HPSDRModel.HERMES:
                             case HPSDRModel.HERMESLITE: // MI0BOT: HL2
+                            case HPSDRModel.ANAN_G1: //N1GP G1 added
                             case HPSDRModel.ANAN10:
                             case HPSDRModel.ANAN100:
                             case HPSDRModel.ANAN10E:
