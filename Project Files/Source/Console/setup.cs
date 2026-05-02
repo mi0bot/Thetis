@@ -6502,7 +6502,7 @@ namespace Thetis
                 HardwareSpecific.Model != HPSDRModel.ANAN7000D &&
                 HardwareSpecific.Model != HPSDRModel.ANAN8000D &&
                 HardwareSpecific.Model != HPSDRModel.ANVELINAPRO3 &&
-                HardwareSpecific.Model != HPSDRModel.ANAN_G1 && //N1GP G1 added
+                HardwareSpecific.Model != HPSDRModel.ANAN_G2E && //N1GP G2E added
                 HardwareSpecific.Model != HPSDRModel.ANAN_G2 &&
                 HardwareSpecific.Model != HPSDRModel.ANAN_G2_1K &&
                 HardwareSpecific.Model != HPSDRModel.REDPITAYA)//DH1KLM
@@ -6591,9 +6591,7 @@ namespace Thetis
                 HardwareSpecific.Model == HPSDRModel.ANAN7000D || HardwareSpecific.Model == HPSDRModel.ANAN8000D ||
                 HardwareSpecific.Model == HPSDRModel.ANVELINAPRO3 ||
                 HardwareSpecific.Model == HPSDRModel.ANAN_G2 || HardwareSpecific.Model == HPSDRModel.ANAN_G2_1K ||
-               HardwareSpecific.Model == HPSDRModel.REDPITAYA    || //DH1KLM
-                HardwareSpecific.Model == HPSDRModel.REDPITAYA || HardwareSpecific.Model == HPSDRModel.ANAN_G1) //DH1KLM  //N1GP G1 added
-
+                HardwareSpecific.Model == HPSDRModel.REDPITAYA || HardwareSpecific.Model == HPSDRModel.ANAN_G2E) //DH1KLM  //N1GP G2E added
             {
                 if (!tcGeneral.TabPages.Contains(tpOtherHW))
                 {
@@ -16128,7 +16126,7 @@ namespace Thetis
             }
             else if (AlexPresent && 
                 HardwareSpecific.Model != HPSDRModel.ANAN10 &&
-                HardwareSpecific.Model != HPSDRModel.ANAN_G1 && //N1GP G1 added
+                HardwareSpecific.Model != HPSDRModel.ANAN_G2E && //N1GP G2E added
                 HardwareSpecific.Model != HPSDRModel.ANAN10E &&
                 HardwareSpecific.Model != HPSDRModel.ANAN7000D &&
                 HardwareSpecific.Model != HPSDRModel.ANAN8000D &&
@@ -16192,7 +16190,7 @@ namespace Thetis
             //MW0LGE_21f
             if (AlexPresent &&
                 HardwareSpecific.Model != HPSDRModel.ANAN10 &&
-                HardwareSpecific.Model != HPSDRModel.ANAN_G1 && //N1GP G1 added
+                HardwareSpecific.Model != HPSDRModel.ANAN_G2E && //N1GP G2E added
                 HardwareSpecific.Model != HPSDRModel.ANAN10E &&
                 HardwareSpecific.Model != HPSDRModel.ANAN7000D &&
                 HardwareSpecific.Model != HPSDRModel.ANAN8000D &&
@@ -20231,7 +20229,7 @@ namespace Thetis
                     setupAttRXControls(2);
                     break;
 
-                case HPSDRModel.ANAN_G1: //N1GP G1 added
+                case HPSDRModel.ANAN_G2E: //N1GP G2E added
                     chkAlexPresent.Checked = true;
                     chkAlexPresent.Enabled = true;
                     chkApolloPresent.Enabled = false;
@@ -21067,8 +21065,8 @@ namespace Thetis
             switch (HardwareSpecific.Model)
             {
                 case HPSDRModel.HERMES:
+                case HPSDRModel.ANAN_G2E: //N1GP G2E added
                 case HPSDRModel.HERMESLITE:         // MI0BOT: HL2
-                case HPSDRModel.ANAN_G1: //N1GP G1 added
                 case HPSDRModel.ANAN10:
                 case HPSDRModel.ANAN10E:
                 case HPSDRModel.ANAN100:
@@ -21246,8 +21244,8 @@ namespace Thetis
             switch (HardwareSpecific.Model)
             {
                 case HPSDRModel.HERMES:
+                case HPSDRModel.ANAN_G2E: //N1GP G2E added
                 case HPSDRModel.HERMESLITE:
-                case HPSDRModel.ANAN_G1: //N1GP G1 added
                 case HPSDRModel.ANAN10:
                 case HPSDRModel.ANAN10E:
                 case HPSDRModel.ANAN100:
@@ -21277,8 +21275,8 @@ namespace Thetis
             switch (HardwareSpecific.Model)
             {
                 case HPSDRModel.HERMES:
+                case HPSDRModel.ANAN_G2E: //N1GP G2E added
                 case HPSDRModel.HERMESLITE:
-                case HPSDRModel.ANAN_G1: //N1GP G1 added
                 case HPSDRModel.ANAN10:
                 case HPSDRModel.ANAN10E:
                 case HPSDRModel.ANAN100:
@@ -24640,11 +24638,11 @@ namespace Thetis
                             if (g != 1000 && bRemoveOld) removeOldPASetting(sSetting);
                         }
                         break;
-                    case HPSDRModel.ANAN_G1: //N1GP G1 added
+                    case HPSDRModel.ANAN_G2E: //N1GP G2E added
                         for (int n = (int)Band.B160M; n <= (int)Band.B6M; n++)
                         {
                             Band b = (Band)n;
-                            string sSetting = "udANAN_G1PAGain" + mapBandToMeters(b).ToString();
+                            string sSetting = "udANAN_G2EPAGain" + mapBandToMeters(b).ToString();
                             float g = getOldVariablePAgain(sSetting, ref getDict);
                             if (g != 1000) p.SetGainForBand(b, g);
                             if (g != 1000 && bRemoveOld) removeOldPASetting(sSetting);
@@ -24652,7 +24650,7 @@ namespace Thetis
                         for (int n = (int)Band.VHF0; n <= (int)Band.VHF13; n++)
                         {
                             Band b = (Band)n;
-                            string sSetting = "udANAN_G1PAGainVHF" + (n - (int)Band.VHF0).ToString();
+                            string sSetting = "udANAN_G2EPAGainVHF" + (n - (int)Band.VHF0).ToString();
                             float g = getOldVariablePAgain(sSetting, ref getDict);
                             if (g != 1000) p.SetGainForBand(b, g);
                             if (g != 1000 && bRemoveOld) removeOldPASetting(sSetting);
@@ -38439,6 +38437,11 @@ namespace Thetis
         private void tbTCISpotBackPanel_alpha_Scroll(object sender, EventArgs e)
         {
             Display.TCIBackPanelAlpha = tbTCISpotBackPanel_alpha.Value;
+        }
+
+        private void chkWaterfall_smear_CheckedChanged(object sender, EventArgs e)
+        {
+            Display.AllowWaterfallSmear = chkWaterfall_smear.Checked;
         }
     }
 
