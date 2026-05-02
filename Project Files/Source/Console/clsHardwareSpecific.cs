@@ -258,7 +258,7 @@ namespace Thetis
                        _model == HPSDRModel.ANAN_G2E || //N1GP G2E added
                        _model == HPSDRModel.ANAN_G2 ||
                        _model == HPSDRModel.ANAN_G2_1K ||
-                       _model == HPSDRModel.REDPITAYA;
+                       _model == HPSDRModel.REDPITAYA ||
                        _model == HPSDRModel.ANAN8000D ||
                        _model == HPSDRModel.ANVELINAPRO3 ||
                        _model == HPSDRModel.ANAN_G2 ||
@@ -274,7 +274,7 @@ namespace Thetis
                        _model == HPSDRModel.ANAN_G2E || //N1GP G2E added
                        _model == HPSDRModel.ANAN_G2 ||
                        _model == HPSDRModel.ANAN_G2_1K ||
-                       _model == HPSDRModel.REDPITAYA;
+                       _model == HPSDRModel.REDPITAYA ||
                        _model == HPSDRModel.ANAN8000D ||
                        _model == HPSDRModel.ANVELINAPRO3 || 
                        _model == HPSDRModel.ANAN_G2 ||
